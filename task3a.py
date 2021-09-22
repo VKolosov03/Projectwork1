@@ -1,22 +1,50 @@
-def task1(list1,index,repeater,maxlen):
-#list1-string turned into list,repeater index for repeating non numbers,maxlen-string's length
-	str2 = "1234567890+-"
-	return task3(index,maxlen,list1) if list1[index] not in str2 or index==maxlen or task2(list1[index],repeater)==1 else task1(list1,index+1,list1[index],maxlen)
-#task1 function was created for searching repeating non numbers and alphavite symbols into list.It uses ternary recursion
-def task2(curnumb,repeater):
-#curnumb-current list's element
-	str3 = "+-"
-	return 1 if curnumb in str3 and repeater in str3 else 0
-#task2 function was made for checking repeating of '+' and '-'.It uses ternary operator
-def task3(index,maxlen,list1):
-	return task4('True',eval(''.join(list1[0::]))) if index==maxlen else task4('False',None)
-#task3 function collects results and due to ternary operator chooses the answer
-def task4(boolf,numbf):
-#boolf-result from task3:is it true or faulse, numbf-final digit after all opertions
-	print('Result: (',boolf,',',numbf,')')
-	pass
-#task4 print the final result and stops by function pass
-strmain = input("User input: ")
-#user inputs main string for our programme
-task1(list(strmain),0,0,len(strmain)-1)
-#list()-turns string into list, len()-outputs string's length
+def check_initial_symbols(string_main,list_index):
+#check_initial_symbols()-check string existence and checks string for sign existence before digits
+
+	if not string_main:
+		return (False,None)
+	if list(string_main)[list_index].isdigit() and len(string_main)>1 :
+#isdigit()-check elements for digits
+#len()-return string length
+
+		if '+' in list(string_main)[:list_index:] or '-' in list(string_main)[:list_index:]:
+			return (False,None)
+		else:
+			return check_list(list(string_main),0,0,len(string_main)-1,0)
+	else:
+		return check_initial_symbols(string_main,
+		list_index+1) if list_index!=len(string_main)-1 else check_list(list(string_main),0,0,len(string_main)-1,0)
+#it searching initial digit and start next function if there're no digits
+#then it searching '+' nad '-' before this digit
+#ternary operator checking why the searching was over 
+
+def check_list(list_main,list_index,repeat_sign,max_length,space_index):
+#check_list()-check list for all SPACE elements and non arithmetic symbols and for signs after equation
+
+	if list_main[list_index]==' ' or list_main[list_index]=='	':
+		space_index=space_index+1
+	if list_main[list_index] not in" 1234567890+-	"or list_index==max_length or check_repeated_signs(list_main,
+	list_index,repeat_sign):
+		return print_result(list_index,max_length,list_main,space_index)
+	else:
+		return check_list(list_main,list_index+1,list_main[list_index],max_length,space_index)
+
+def check_repeated_signs(list_main,list_index,repeat_sign):
+#check_repeated_signs()-check list for repeating '+' and '-'
+
+	if list_main[list_index]==' ' or list_main[list_index]=='	':
+		return check_repeated_signs(list_main,list_index+1,repeat_sign)
+	return True if list_main[list_index] in "+-" and repeat_sign in "+-" else False
+
+def print_result(list_index,max_length,list_main,space_index):
+#print_result()-return result for output
+
+	if list_index!=max_length or space_index==list_index+1 or list_main[list_index] not in " 1234567890	":
+		return (False,None)
+	else:
+		return (True,eval(''.join(list_main[0::])))
+#eval()-evaluate the expression
+#join()-connect list's elements into string
+
+string_main = input("User input: ")
+print("Result: ",check_initial_symbols(string_main,0))

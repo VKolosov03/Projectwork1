@@ -1,8 +1,19 @@
-import sys as console
-#importing module sys for using sys.argv and using key word as for explaining using of module
+import sys
+
 switch = {'add':'+','sub':'-','div':'/','mul':'*','pow':'**'}
-#using dictionary for turning phrazes into symbols
-console.argv[1],console.argv[2]=console.argv[2],switch[console.argv[1]]
-#swap elements
-print(eval(''.join(console.argv[1::])))
-#join turns list into string, eval calculate string examples
+try:
+	sys.argv[1],sys.argv[2]=sys.argv[2],switch[sys.argv[1]]
+	print(eval(''.join(sys.argv[1::])))
+#eval()-evaluate the expression
+#join()-connect list's elements into string
+
+except SyntaxError:
+    print("Programme can't run it")
+except NameError:
+    print("Programme can't run it")
+except ZeroDivisionError:
+    print("Programme can't run it")
+except KeyError:
+    print("Programme can't run it")
+except IndexError:
+    print("Programme can't run it")

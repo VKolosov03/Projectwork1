@@ -1,4 +1,13 @@
-import sys as console
-#importing module sys for using sys.argv and using key word as for explaining using of module
-print(eval(''.join(console.argv[1::])))
-#join turns list into string, eval calculate string examples
+import sys
+
+try:
+    print(eval(''.join(sys.argv[1::])))
+#eval()-evaluate the expression
+#join()-connect list's elements into string
+
+except SyntaxError:
+    print("Programme can't run it")
+except NameError:
+    print("Programme can't run it")
+except ZeroDivisionError:
+    print("Programme can't run it")
